@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Em´s quizzes</title>
+</head>
+<body>
+<h1>Em's quizzes</h1>
+<ul th:each="quiz : ${quizzes}">
+    <li><a th:href="'/quiz/' + ${quiz.id}" th:text="${quiz.title}"></a></li>
+</ul>
+
+
+</body>
+</html>
