@@ -78,9 +78,10 @@
         });
 
         finishButton.style.display = "block";
-        // Attach event listener to the "Finish quiz" button
+// Attach event listener to the "Finish quiz" button
         finishButton.addEventListener("click", function() {
-          let lastQuestionId = "question" + startButtons.length;
+          let lastQuestionId = "question" + (startButtons.length - 1); // Adjusted to get the next question ID
+          console.log("Last question ID:", lastQuestionId); // Debug statement
           const lastQuestion = document.getElementById(lastQuestionId);
           if (lastQuestion) {
             lastQuestion.style.display = "none"; // Hide the last question
