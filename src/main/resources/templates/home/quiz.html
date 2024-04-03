@@ -53,7 +53,7 @@
 
       startButtons.forEach(function(startButton, index, array) {
         var currentQuestionId = "question" + (index + 1);
-        var nextQuestionId = array[index + 1] ? "question" + (index + 2) : null;
+        var nextQuestionId = "question" + (index + 2);
 
         startButton.onclick = function () {
           startQuestionTimer(startButton, currentQuestionId, nextQuestionId, finishButton);
@@ -71,7 +71,20 @@
               }
             }
           }
+
+          // Hide the "Finish quiz" button if not the last question
+          if (index !== array.length - 1) {
+            finishButton.style.display = "none";
+          }
         };
+
+        // Hide all questions except the first one initially
+        if (index !== 0) {
+          var question = document.getElementById(currentQuestionId);
+          if (question) {
+            question.style.display = "none";
+          }
+        }
       });
     };
   </script>
@@ -89,8 +102,9 @@
     <p class="duration" style="display: none;" th:text="${question.duration}"></p> <!-- Hidden duration element -->
     <p>Time remaining: <span class="timer"></span></p> <!-- Timer display -->
 
-    <!-- Next "Start" button -->
-    <button class="startButton" th:id="'startButton' + ${iterStat.index + 2}">Start Next</button>
+    <!-- Next "Start" button or "Finish quiz" button -->
+    <button class="startButton" th:id="'startButton' + ${iterStat.index + 2}" th:if="${iterStat.last}">Finish quiz</button>
+    <button class="startButton" th:id="'startButton' + ${iterStat.index + 2}" th:unless="${iterStat.last}">Start Next</button>
 
     <ul>
       <li th:each="option : ${question.options}">
