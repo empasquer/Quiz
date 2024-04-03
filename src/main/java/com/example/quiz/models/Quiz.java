@@ -7,7 +7,6 @@ public class Quiz {
     private int id;
     private String title;
     private String description;
-    private int duration;
     private List<Question> questions;
 
     public Quiz() {
@@ -25,9 +24,6 @@ public class Quiz {
         return description;
     }
 
-    public int getDuration() {
-        return duration;
-    }
 
     public List<Question> getQuestions() {
         return questions;
@@ -45,9 +41,6 @@ public class Quiz {
         this.description = description;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;

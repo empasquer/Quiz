@@ -39,11 +39,7 @@ public class QuizRepository {
             query = "SELECT * FROM answer_option WHERE question_id = ?";
             List<Option> options = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Option.class), question.getId());
 
-            for (Option option : options ){
-                System.out.println(option.getId());
-                System.out.println(option.getQuestionId());
-                System.out.println(option.getAnswerOptionText());
-            }
+            System.out.println(question.getDuration());
             question.setOptions(options);
         }
 

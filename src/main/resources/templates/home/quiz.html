@@ -1,16 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${quiz.title}"></title>
+  <meta charset="UTF-8">
+  <title th:text="${quiz.title}"></title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="text/javascript">
+    // Function to start the countdown timer for each question
+    function startTimer(duration, display, startButton, nextQuestion) {
+      var timer = duration, minutes, seconds;
+      var interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          clearInterval(interval); // Stop the timer when it reaches zero
+          display.textContent = "Time's up!";
+          startButton.style.display = "none"; // Hide the start button
+          if (nextQuestion) {
+            nextQuestion.style.display = "block"; // Show the next question
+          }
+        }
+      }, 1000);
+    }
+
+    // Function to handle the "Start" button click event for each question
+    function startQuestionTimer(startButton, questionId, nextQuestionId) {
+      var question = document.getElementById(questionId);
+      var duration = parseInt(question.querySelector('.duration').textContent); // Get duration from question element
+      var display = question.querySelector('.timer'); // Get timer display element
+      var nextQuestion = document.getElementById(nextQuestionId); // Get the next question element
+
+      startButton.style.display = "none"; // Hide the start button
+      if (nextQuestion) {
+        nextQuestion.style.display = "none"; // Hide the next question initially
+      }
+      startTimer(duration, display, startButton, nextQuestion); // Start timer for the specific question
+    }
+
+    // Function to initialize the "Start" buttons and questions
+    window.onload = function () {
+      var startButtons = document.querySelectorAll(".startButton");
+      startButtons.forEach(function(startButton, index, array) {
+        var currentQuestionId = "question" + (index + 1);
+        var nextQuestionId = array[index + 1] ? "question" + (index + 2) : null;
+
+        startButton.onclick = function () {
+          startQuestionTimer(startButton, currentQuestionId, nextQuestionId);
+          startButton.style.display = "none"; // Hide the "Start" button after click
+          document.getElementById(currentQuestionId).style.display = "block"; // Show the question after click
+        };
+      });
+    };
+  </script>
 </head>
 <body>
 <h1 th:text="${quiz.title}"></h1>
 
-<div th:each="question : ${quiz.questions}">
-  <div class="question">
+<!-- First "Start" button -->
+<button class="startButton" id="startButton1">Start</button>
+
+<!-- Iterate over each question -->
+<div th:each="question, iterStat : ${quiz.questions}">
+  <div class="question" th:id="'question' + ${question.id}">
     <p th:text="${question.questionText}"></p>
+    <p class="duration" style="display: none;" th:text="${question.duration}"></p> <!-- Hidden duration element -->
+    <p>Time remaining: <span class="timer"></span></p> <!-- Timer display -->
+
+    <!-- Next "Start" button -->
+    <button class="startButton" th:id="'startButton' + ${iterStat.index + 2}">Start Next</button>
 
     <ul>
       <li th:each="option : ${question.options}">
@@ -24,34 +86,3 @@
 </div>
 </body>
 </html>
-
-
-<!--
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title th:text="${quiz.title}"></title>
-</head>
-<body>
-<h1 th:text="${quiz.title}"></h1>
-
-&lt;!&ndash; Iterate over quiz questions &ndash;&gt;
-<div th:each="question : ${quiz.questions}">
-  <div class="question">
-    <p th:text="${question.questionText}"></p>
-
-    &lt;!&ndash; Iterate over question options &ndash;&gt;
-    <ul>
-      <li th:each="option : ${question.options}">
-        <label>
-          <input type="checkbox" th:name="'question[' + ${question.id} + ']'" th:value="'${option.id}'">
-          <span th:text="${option.optionText}"></span>
-        </label>
-      </li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>
--->

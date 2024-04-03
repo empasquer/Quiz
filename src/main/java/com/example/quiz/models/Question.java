@@ -8,6 +8,7 @@ public class Question {
     private int quizId; // Add this property
     private String questionText;
     private List<Option> options;
+    private int duration;
 
     public Question() {
     }
@@ -28,6 +29,10 @@ public class Question {
         return options;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -44,6 +49,9 @@ public class Question {
         this.options = options;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     /*-----*/
 

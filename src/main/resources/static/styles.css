@@ -1,0 +1,29 @@
+/* Hide all question elements initially */
+.question {
+    display: none;
+}
+
+/* Style for the quiz title */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the start button */
+button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for the timer */
+.timer {
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+}
