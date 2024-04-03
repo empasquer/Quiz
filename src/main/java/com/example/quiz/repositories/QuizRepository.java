@@ -26,7 +26,6 @@ public class QuizRepository {
     }
 
 
-/*
     public Quiz getQuizById(int quizId) {
         String query = "SELECT * FROM quiz WHERE id = ?";
         RowMapper<Quiz> rowMapper = new BeanPropertyRowMapper<>(Quiz.class);
@@ -49,11 +48,10 @@ public class QuizRepository {
 
         return quiz;
     }
-*/
 
 
 
-    public Quiz getQuizById(int quizId) {
+  /*  public Quiz getQuizById(int quizId) {
         String query = "SELECT q.id, q.title, q.description, q.duration, " +
                 "qu.id AS question_id, qu.question_text, " +
                 "ao.id AS option_id, ao.answer_option_text AS option_text " +
@@ -103,6 +101,6 @@ public class QuizRepository {
         }
 
         return quiz;
-    }
+    }*/
 
 }
