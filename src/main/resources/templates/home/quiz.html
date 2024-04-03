@@ -26,7 +26,8 @@
             if (nextQuestion) {
               nextQuestion.style.display = "block"; // Show the next question
             } else {
-              finishButton.style.display = "block"; // Show the "Finish quiz" button
+              // Simulate click event on the "Finish quiz" button
+              finishButton.click();
             }
           }
         }, 1000);
@@ -35,8 +36,18 @@
       // Function to handle the "Start" button click event for each question
       function startQuestionTimer(startButton, questionId, nextQuestionId, finishButton) {
         let question = document.getElementById(questionId);
-        if (!question) return; // Handle null question
-        let duration = parseInt(question.querySelector('.duration').textContent); // Get duration from question element
+        if (!question) {
+          console.error("Question element not found for ID:", questionId);
+          return;
+        }
+
+        let durationElement = question.querySelector('.duration');
+        if (!durationElement) {
+          console.error("Duration element not found within question:", questionId);
+          return;
+        }
+
+        let duration = parseInt(durationElement.textContent);
         let display = question.querySelector('.timer'); // Get timer display element
         let nextQuestion = document.getElementById(nextQuestionId); // Get the next question element
 
@@ -47,7 +58,6 @@
         startTimer(duration, display, startButton, nextQuestion, finishButton); // Start timer for the specific question
       }
 
-      // Function to initialize the "Start" buttons and questions
       // Function to initialize the "Start" buttons and questions
       window.onload = function () {
         var startButtons = document.querySelectorAll(".startButton");
@@ -78,7 +88,7 @@
         });
 
         finishButton.style.display = "block";
-// Attach event listener to the "Finish quiz" button
+        // Attach event listener to the "Finish quiz" button
         finishButton.addEventListener("click", function() {
           let lastQuestionId = "question" + (startButtons.length - 1); // Adjusted to get the next question ID
           console.log("Last question ID:", lastQuestionId); // Debug statement
