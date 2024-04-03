@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/styles.css">
   <script type="text/javascript">
     // Function to start the countdown timer for each question
-    function startTimer(duration, display, startButton, nextQuestion) {
+    function startTimer(duration, display, startButton, nextQuestion, finishButton) {
       var timer = duration, minutes, seconds;
       var interval = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
@@ -23,14 +23,17 @@
           startButton.style.display = "none"; // Hide the start button
           if (nextQuestion) {
             nextQuestion.style.display = "block"; // Show the next question
+          } else {
+            finishButton.style.display = "block"; // Show the "Finish quiz" button
           }
         }
       }, 1000);
     }
 
     // Function to handle the "Start" button click event for each question
-    function startQuestionTimer(startButton, questionId, nextQuestionId) {
+    function startQuestionTimer(startButton, questionId, nextQuestionId, finishButton) {
       var question = document.getElementById(questionId);
+      if (!question) return; // Handle null question
       var duration = parseInt(question.querySelector('.duration').textContent); // Get duration from question element
       var display = question.querySelector('.timer'); // Get timer display element
       var nextQuestion = document.getElementById(nextQuestionId); // Get the next question element
@@ -39,37 +42,37 @@
       if (nextQuestion) {
         nextQuestion.style.display = "none"; // Hide the next question initially
       }
-      startTimer(duration, display, startButton, nextQuestion); // Start timer for the specific question
+      startTimer(duration, display, startButton, nextQuestion, finishButton); // Start timer for the specific question
     }
 
     // Function to initialize the "Start" buttons and questions
     window.onload = function () {
       var startButtons = document.querySelectorAll(".startButton");
+      var finishButton = document.getElementById("finishButton"); // Get the "Finish quiz" button
+      finishButton.style.display = "none"; // Hide the "Finish quiz" button initially
+
       startButtons.forEach(function(startButton, index, array) {
         var currentQuestionId = "question" + (index + 1);
-        var nextQuestionId = array[index + 1] ? "question" + (index + 2) : null;
+        var nextQuestionId = "question" + (index + 2);
+        var currentQuestion = document.getElementById(currentQuestionId);
 
         startButton.onclick = function () {
-          startQuestionTimer(startButton, currentQuestionId, nextQuestionId);
+          startQuestionTimer(startButton, currentQuestionId, nextQuestionId, finishButton);
           startButton.style.display = "none"; // Hide the "Start" button after click
-          document.getElementById(currentQuestionId).style.display = "block"; // Show the question after click
-
-          // Hide previous question
-          if (index > 0) {
-            var previousQuestionId = "question" + index;
-            document.getElementById(previousQuestionId).style.display = "none";
+          if (currentQuestion) {
+            currentQuestion.style.display = "none"; // Hide the current question
+          }
+          if (index === startButtons.length - 1) {
+            finishButton.style.display = "none"; // Hide the "Finish quiz" button if it's the last question
+          }
+          if (index < startButtons.length - 1) {
+            var nextQuestion = document.getElementById(nextQuestionId);
+            if (nextQuestion) {
+              nextQuestion.style.display = "block"; // Show the next question
+            }
           }
         };
       });
-
-      // Show "Finish quiz" button initially
-      document.getElementById('finishButton').style.display = "block";
-
-      // Handle "Finish quiz" button click
-      document.getElementById('finishButton').onclick = function() {
-        document.getElementById('finishButton').style.display = "none"; // Hide "Finish quiz" button
-        document.getElementById('quizOver').style.display = "block"; // Show "The quiz is over" message
-      };
     };
   </script>
 </head>
@@ -101,7 +104,7 @@
 </div>
 
 <!-- "Finish quiz" button -->
-<button id="finishButton" style="display: none;">Finish quiz</button>
+<button id="finishButton">Finish quiz</button>
 
 <!-- "The quiz is over" message -->
 <div id="quizOver" style="display: none;">The quiz is over</div>
