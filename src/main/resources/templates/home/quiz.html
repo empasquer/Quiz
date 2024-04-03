@@ -16,7 +16,7 @@
       <li th:each="option : ${question.options}">
         <label>
           <input type="checkbox" name="question[[${question.id}]]" value="[(${option.id})]">
-          <span th:text="${option.optionText}"></span>
+          <span th:text="${option.answerOptionText}"></span>
         </label>
       </li>
     </ul>
