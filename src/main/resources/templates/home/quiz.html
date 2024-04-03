@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,10 @@
 <body>
 <h1 th:text="${quiz.title}"></h1>
 
-<!-- Iterate over quiz questions -->
 <div th:each="question : ${quiz.questions}">
   <div class="question">
     <p th:text="${question.questionText}"></p>
 
-    <!-- Iterate over question options -->
     <ul>
       <li th:each="option : ${question.options}">
         <label>
@@ -25,3 +24,34 @@
 </div>
 </body>
 </html>
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${quiz.title}"></title>
+</head>
+<body>
+<h1 th:text="${quiz.title}"></h1>
+
+&lt;!&ndash; Iterate over quiz questions &ndash;&gt;
+<div th:each="question : ${quiz.questions}">
+  <div class="question">
+    <p th:text="${question.questionText}"></p>
+
+    &lt;!&ndash; Iterate over question options &ndash;&gt;
+    <ul>
+      <li th:each="option : ${question.options}">
+        <label>
+          <input type="checkbox" th:name="'question[' + ${question.id} + ']'" th:value="'${option.id}'">
+          <span th:text="${option.optionText}"></span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
+-->

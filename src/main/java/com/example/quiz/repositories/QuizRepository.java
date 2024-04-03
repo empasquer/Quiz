@@ -26,15 +26,40 @@ public class QuizRepository {
     }
 
 
+/*
+    public Quiz getQuizById(int quizId) {
+        String query = "SELECT * FROM quiz WHERE id = ?";
+        RowMapper<Quiz> rowMapper = new BeanPropertyRowMapper<>(Quiz.class);
+        Quiz quiz = jdbcTemplate.queryForObject(query, rowMapper, quizId);
+
+        query = "SELECT * FROM question WHERE quiz_id = ?";
+        List<Question> questions = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Question.class), quizId);
+
+        for (Question question : questions) {
+            System.out.println(question.getQuestionText());
+            query = "SELECT * FROM answer_option WHERE question_id = ?";
+            List<Option> options = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Option.class), question.getId());
+            for (Option option : options ){
+                System.out.println(option.getOptionText());
+            }
+            question.setOptions(options);
+        }
+
+        quiz.setQuestions(questions);
+
+        return quiz;
+    }
+*/
+
 
 
     public Quiz getQuizById(int quizId) {
         String query = "SELECT q.id, q.title, q.description, q.duration, " +
                 "qu.id AS question_id, qu.question_text, " +
-                "op.id AS option_id, op.answer_option_text AS option_text " + // Correctly reference the column name
+                "ao.id AS option_id, ao.answer_option_text AS option_text " +
                 "FROM quiz q " +
                 "LEFT JOIN question qu ON q.id = qu.quiz_id " +
-                "LEFT JOIN answer_option op ON qu.id = op.question_id " +
+                "LEFT JOIN answer_option ao ON qu.id = ao.question_id " +
                 "WHERE q.id = ?";
 
 
