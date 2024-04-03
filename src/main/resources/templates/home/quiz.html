@@ -53,6 +53,12 @@
           startQuestionTimer(startButton, currentQuestionId, nextQuestionId);
           startButton.style.display = "none"; // Hide the "Start" button after click
           document.getElementById(currentQuestionId).style.display = "block"; // Show the question after click
+
+          // Hide previous question
+          if (index > 0) {
+            var previousQuestionId = "question" + index;
+            document.getElementById(previousQuestionId).style.display = "none";
+          }
         };
       });
     };
