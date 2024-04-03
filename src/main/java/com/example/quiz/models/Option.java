@@ -3,7 +3,7 @@ package com.example.quiz.models;
 public class Option {
     private int id;
     private int questionId;
-    private String optionText;
+    private String answerOptionText;
 
     public Option() {
     }
@@ -16,8 +16,8 @@ public class Option {
         return questionId;
     }
 
-    public String getOptionText() {
-        return optionText;
+    public String getAnswerOptionText() {
+        return answerOptionText;
     }
 
     public void setId(int id) {
@@ -28,7 +28,7 @@ public class Option {
         this.questionId = questionId;
     }
 
-    public void setOptionText(String optionText) {
-        this.optionText = optionText;
+    public void setAnswerOptionText(String answerOptionText) {
+        this.answerOptionText = answerOptionText;
     }
 }
