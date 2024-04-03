@@ -61,6 +61,15 @@
           }
         };
       });
+
+      // Show "Finish quiz" button initially
+      document.getElementById('finishButton').style.display = "block";
+
+      // Handle "Finish quiz" button click
+      document.getElementById('finishButton').onclick = function() {
+        document.getElementById('finishButton').style.display = "none"; // Hide "Finish quiz" button
+        document.getElementById('quizOver').style.display = "block"; // Show "The quiz is over" message
+      };
     };
   </script>
 </head>
@@ -90,5 +99,12 @@
     </ul>
   </div>
 </div>
+
+<!-- "Finish quiz" button -->
+<button id="finishButton" style="display: none;">Finish quiz</button>
+
+<!-- "The quiz is over" message -->
+<div id="quizOver" style="display: none;">The quiz is over</div>
+
 </body>
 </html>
