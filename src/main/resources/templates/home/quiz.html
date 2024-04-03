@@ -53,22 +53,22 @@
 
       startButtons.forEach(function(startButton, index, array) {
         var currentQuestionId = "question" + (index + 1);
-        var nextQuestionId = "question" + (index + 2);
-        var currentQuestion = document.getElementById(currentQuestionId);
+        var nextQuestionId = array[index + 1] ? "question" + (index + 2) : null;
 
         startButton.onclick = function () {
           startQuestionTimer(startButton, currentQuestionId, nextQuestionId, finishButton);
           startButton.style.display = "none"; // Hide the "Start" button after click
+          var currentQuestion = document.getElementById(currentQuestionId);
           if (currentQuestion) {
-            currentQuestion.style.display = "none"; // Hide the current question
-          }
-          if (index === startButtons.length - 1) {
-            finishButton.style.display = "none"; // Hide the "Finish quiz" button if it's the last question
-          }
-          if (index < startButtons.length - 1) {
-            var nextQuestion = document.getElementById(nextQuestionId);
-            if (nextQuestion) {
-              nextQuestion.style.display = "block"; // Show the next question
+            currentQuestion.style.display = "block"; // Show the question after click
+
+            // Hide previous question
+            if (index > 0) {
+              var previousQuestionId = "question" + index;
+              var previousQuestion = document.getElementById(previousQuestionId);
+              if (previousQuestion) {
+                previousQuestion.style.display = "none";
+              }
             }
           }
         };
